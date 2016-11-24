@@ -1,1 +1,1 @@
-# regurgitator-yml
+# regurgitator-core-yml
