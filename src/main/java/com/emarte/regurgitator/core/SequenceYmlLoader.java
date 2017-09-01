@@ -16,8 +16,7 @@ public class SequenceYmlLoader implements YmlLoader<Sequence> {
     @Override
     public Sequence load(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
         List<Step> steps = new ArrayList<Step>();
-        Map values = yaml.getValues();
-        List stepYamls = (List) values.get(STEPS);
+        List stepYamls = (List) yaml.getValues().get(STEPS);
 
         if(stepYamls != null) {
             for (Object obj : stepYamls) {
@@ -32,11 +31,11 @@ public class SequenceYmlLoader implements YmlLoader<Sequence> {
 
         String id = loadId(yaml, allIds);
         log.debug("Loaded sequence '" + id + "'");
-        return new Sequence(id, steps, loadIsolate(values));
+        return new Sequence(id, steps, loadIsolate(yaml));
     }
 
-    private Isolate loadIsolate(Map values) {
-        String isolateStr = loadOptionalStr(values, ISOLATE);
+    private Isolate loadIsolate(Yaml yaml) {
+        String isolateStr = loadOptionalStr(yaml, ISOLATE);
         return isolateStr != null ? new Isolate(isolateStr.contains("session"), isolateStr.contains("param")) : null;
     }
 }
