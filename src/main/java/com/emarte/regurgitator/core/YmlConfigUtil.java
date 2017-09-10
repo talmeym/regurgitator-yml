@@ -63,7 +63,7 @@ public class YmlConfigUtil {
             return values.get(key);
         }
 
-        throw new RegurgitatorException("Json object missing mandatory element: " + key);    }
+        throw new RegurgitatorException("Yml missing mandatory element: " + key);    }
 
     public static ValueProcessor loadOptionalValueProcessor(Yaml yaml, Set<Object> ids) throws RegurgitatorException {
         Map values = yaml.getValues();
@@ -94,7 +94,7 @@ public class YmlConfigUtil {
             return (String) values.get(key);
         }
 
-        throw new RegurgitatorException("Json object missing mandatory element: " + key);
+        throw new RegurgitatorException("Yml missing mandatory element: " + key);
     }
 
     private static ParameterType loadType(Yaml yaml) throws RegurgitatorException {
