@@ -1,24 +1,14 @@
 package com.emarte.regurgitator.core;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import static com.emarte.regurgitator.core.ConflictPolicy.REPLACE;
 import static com.emarte.regurgitator.core.CoreConfigConstants.*;
-import static com.emarte.regurgitator.core.CoreConfigConstants.MERGE;
 import static com.emarte.regurgitator.core.CoreTypes.STRING;
-import static com.emarte.regurgitator.core.EntityLookup.parameterType;
-import static com.emarte.regurgitator.core.EntityLookup.valueProcessor;
+import static com.emarte.regurgitator.core.EntityLookup.*;
 
 public class YmlConfigUtil {
     private static YmlLoaderUtil<YmlLoader<ValueProcessor>> processorLoaderUtil = new YmlLoaderUtil<YmlLoader<ValueProcessor>>();
-
-    public static Yaml getYaml(Map map) {
-        String type = (String) map.keySet().iterator().next();
-        return new Yaml(type, map.get(type) instanceof Map ? (Map) map.get(type) : new HashMap());
-    }
 
     public static String loadId(Yaml yaml, Set<Object> ids) throws RegurgitatorException {
         Map values = yaml.getValues();
@@ -72,7 +62,7 @@ public class YmlConfigUtil {
         if(processorObj instanceof String) {
             return valueProcessor((String) processorObj);
         } else if (processorObj != null){
-            Yaml processorYaml = YmlConfigUtil.getYaml((Map) processorObj);
+            Yaml processorYaml = new Yaml((Map) processorObj);
             return processorLoaderUtil.deriveLoader(processorYaml).load(processorYaml, ids);
         }
 

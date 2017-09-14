@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Map;
 
-import static com.emarte.regurgitator.core.YmlConfigUtil.getYaml;
-
 public class YmlConfigurationLoader implements ConfigurationLoader {
     private static YmlLoaderUtil<YmlLoader<Step>> loaderUtil = new YmlLoaderUtil<YmlLoader<Step>>();
 
@@ -17,7 +15,7 @@ public class YmlConfigurationLoader implements ConfigurationLoader {
         YamlReader reader = new YamlReader(new InputStreamReader(input));
 
         try {
-            Yaml yaml = getYaml((Map) reader.read());
+            Yaml yaml = new Yaml((Map) reader.read());
             return loaderUtil.deriveLoader(yaml).load(yaml, new HashSet<Object>());
         } catch (Exception e) {
             throw new RegurgitatorException("Error loading regurgitator configuration", e);

@@ -33,7 +33,7 @@ public class ConditionYmlLoader {
 			if(object instanceof String) {
 				behaviour = conditionBehaviour((String) object);
 			} else {
-				Yaml behaviourYaml = getYaml((Map) object);
+				Yaml behaviourYaml = new Yaml((Map) object);
 				behaviour = conditionBehaviourLoaderUtil.deriveLoader(behaviourYaml).load(behaviourYaml, allIds);
 			}
 		}

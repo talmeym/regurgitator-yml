@@ -5,7 +5,6 @@ import java.util.*;
 import static com.emarte.regurgitator.core.CoreConfigConstants.ISOLATE;
 import static com.emarte.regurgitator.core.CoreConfigConstants.STEPS;
 import static com.emarte.regurgitator.core.Log.getLog;
-import static com.emarte.regurgitator.core.YmlConfigUtil.getYaml;
 import static com.emarte.regurgitator.core.YmlConfigUtil.loadId;
 import static com.emarte.regurgitator.core.YmlConfigUtil.loadOptionalStr;
 
@@ -20,7 +19,7 @@ public class SequenceYmlLoader implements YmlLoader<Sequence> {
 
         if(stepYamls != null) {
             for (Object obj : stepYamls) {
-                Yaml stepYaml = getYaml((Map) obj);
+				Yaml stepYaml = new Yaml((Map) obj);
                 steps.add(loaderUtil.deriveLoader(stepYaml).load(stepYaml, allIds));
             }
         }
