@@ -39,7 +39,6 @@ sequence:
 by default, when each child step executes, it is passed the same message object that the sequence received. it is possible to "isolate" a sequence's child steps from the data contained in the message object, by giving the sequence an isolation level. this prevents a child step from receiving data it shouldn't see or that it won't need.
 
 ```yml
-{
 sequence:
  isolate: with-parameters 
  steps:
