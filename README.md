@@ -14,7 +14,7 @@ sequence:
  steps:
  - create-parameter: 
     id: my-step-1 
-    name: "response
+    name: response
     value: this is the response 
  - create-response: 
     source: response 
@@ -47,7 +47,7 @@ sequence:
     name: response
     value: this is the response
  - create-response
-    source: response"
+    source: response
 ```
 
 isolation has 4 settings:
@@ -95,32 +95,32 @@ each rule has one or more conditions that must be satisfied to make the rule pas
 the behaviour of a condition can also be specified as a 'behaviour' property, either as a string:
 
 ```yml
-	...
-    default-step: default-step
-    rules:
-	- step: special-step
-	  conditions:
-	  - source: parameters:special
-	    value: special
-	    behaviour: equals"
-	...
+...
+default-step: default-step
+rules:
+- step: special-step
+  conditions:
+  - source: parameters:special
+    value: special
+    behaviour: equals"
+...
 ```
 
 or as an object:
 
 ```yml
-	...
-    default-step: no-id-found
-    rules:
-	- step: found-id
-	  conditions:
-	  - source: parameters:xml
-	    value: /rg:config/@id
-	    behaviour:
-	     contains-xpath:
-	      namespaces:
-	       rg: http://url.com
-	...
+...
+default-step: no-id-found
+rules:
+- step: found-id
+  conditions:
+  - source: parameters:xml
+    value: /rg:config/@id
+    behaviour:
+     contains-xpath:
+      namespaces:
+       rg: http://url.com
+...
 ```
 
 which allows some condition behaviours to have properties besides the operand (in the example above, the namespaces of the xpath specified). if behaviour is specified in a behaviour property, the operand is specified in the value property.
