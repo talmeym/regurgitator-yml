@@ -71,9 +71,9 @@ decision:
  - create-response:
     id: special-response
     value: this is the special response
- default-step: default-step
+ default-step: default-response
  rules:
- - step: special-step
+ - step: special-response
    conditions:
    - source: parameters:special
      equals: special
