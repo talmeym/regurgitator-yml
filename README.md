@@ -102,7 +102,7 @@ rules:
   conditions:
   - source: parameters:special
     value: special
-    behaviour: equals"
+    behaviour: equals
 ...
 ```
 
@@ -197,7 +197,7 @@ create-parameter:
  processor:
   substitute-processor:
    token: un
-   replacement: very 
+   replacement: "very " 
 ```
 
 the manner in which the value is processed depends on the processor included.
@@ -352,9 +352,9 @@ create-parameter:
  name: positive-spin
  value: you are unhappy
  processor:
-  substitute-processor
+  substitute-processor:
   token: un
-  replacement: very
+  replacement: "very "
 ```
 
 more info on ``value-processor`` [here](https://github.com/talmeym/regurgitator-core-yml#value-processors).
@@ -374,8 +374,8 @@ create-parameter:
  type: STRING
  source: data
  processor:
-  index-processor
-  index: 2
+  index-processor:
+   index: 2
 ```
 
 the index to be looked up can be specified using either a ``value`` property, or ``source`` to retrieve the index from a parameter.
@@ -397,7 +397,8 @@ create-parameter:
  type: NUMBER
  source: data
  processor:
-  value: but this one
+  index-of-processor:
+   value: but this one
 ```
 
 the data value to be looked up can be specified using either a ``value`` property, or ``source`` to retrieve the data value from a parameter.
@@ -436,8 +437,8 @@ create-parameter:
  type: NUMBER
  source: data
  processor:
-  size-processor
-  as-index: true
+  size-processor:
+   as-index: true
 ```
 
 more info on ``value-processor`` [here](https://github.com/talmeym/regurgitator-core-yml#value-processors).
