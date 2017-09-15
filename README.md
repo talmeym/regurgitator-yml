@@ -247,13 +247,13 @@ generate-parameter:
 a create-response returns a response back from regurgitator via a message's ``response-callback`` mechanism. 
 
 ```yml
-create-parameter:
+create-response:
  source: parameters:response-text
 
-create-parameter:
+create-response:
  value: <xml>this is the response</xml>
 
-create-parameter:
+create-response:
  file: classpath:/canned_response.xml
 ```
 a create-response can have the same value sources as create-parameter, ``source``, ``value``, or ``file``. 
