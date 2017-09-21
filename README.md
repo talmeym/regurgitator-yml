@@ -421,8 +421,6 @@ create-parameter:
  processor: size-processor
 ```
 
-more info on ``value-processor`` [here](https://github.com/talmeym/regurgitator-core-yml#value-processors).
-
 the optional ``as-index`` property returns the size zero-indexed, eg. 3 items returning a value of 2. without this property, the processor can be in-lined, as shown above.
 
 ```yml
