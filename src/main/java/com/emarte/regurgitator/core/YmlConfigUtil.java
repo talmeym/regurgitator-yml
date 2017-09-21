@@ -8,7 +8,8 @@ import static com.emarte.regurgitator.core.CoreTypes.STRING;
 import static com.emarte.regurgitator.core.EntityLookup.*;
 
 public class YmlConfigUtil {
-    private static YmlLoaderUtil<YmlLoader<ValueProcessor>> processorLoaderUtil = new YmlLoaderUtil<YmlLoader<ValueProcessor>>();
+    private static final YmlLoaderUtil<YmlLoader<ValueProcessor>> processorLoaderUtil = new YmlLoaderUtil<YmlLoader<ValueProcessor>>();
+    private static final Random RANDOM = new Random();
 
     public static String loadId(Yaml yaml, Set<Object> ids) throws RegurgitatorException {
         Map values = yaml.getValues();
@@ -23,7 +24,7 @@ public class YmlConfigUtil {
 
     public static String loadId(Yaml inner, String outerName, Set<Object> ids) throws RegurgitatorException {
         Map values = inner.getValues();
-        String id = values.containsKey(ID) ? (String) values.get(ID) : outerName + "-" + new Random().nextInt(100000);
+        String id = values.containsKey(ID) ? (String) values.get(ID) : outerName + "-" + RANDOM.nextInt(100000);
 
         if (!ids.add(id)) {
             throw new RegurgitatorException("Duplicate id: " + id);
