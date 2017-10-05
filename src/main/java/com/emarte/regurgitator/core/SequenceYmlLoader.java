@@ -19,7 +19,7 @@ public class SequenceYmlLoader implements YmlLoader<Sequence> {
 
         if(stepYamls != null) {
             for (Object obj : stepYamls) {
-				Yaml stepYaml = new Yaml((Map) obj);
+                Yaml stepYaml = new Yaml((Map) obj);
                 steps.add(loaderUtil.deriveLoader(stepYaml).load(stepYaml, allIds));
             }
         }
@@ -29,7 +29,7 @@ public class SequenceYmlLoader implements YmlLoader<Sequence> {
         }
 
         String id = loadId(yaml, allIds);
-        log.debug("Loaded sequence '" + id + "'");
+        log.debug("Loaded sequence '{}'", id);
         return new Sequence(id, steps, loadIsolate(yaml));
     }
 

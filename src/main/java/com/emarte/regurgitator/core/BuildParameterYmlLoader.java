@@ -12,21 +12,21 @@ public class BuildParameterYmlLoader implements YmlLoader<Step> {
     private static final Log log = getLog(BuildParameterYmlLoader.class);
     private static final YmlLoaderUtil<YmlLoader<ValueBuilder>> builderLoaderUtil = new YmlLoaderUtil<YmlLoader<ValueBuilder>>();
 
-	@Override
-	public Step load(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
-		Object builderObj = YmlConfigUtil.loadMandatory(yaml, BUILDER);
+    @Override
+    public Step load(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
+        Object builderObj = YmlConfigUtil.loadMandatory(yaml, BUILDER);
         ValueBuilder valueBuilder;
 
         if(builderObj instanceof String) {
             valueBuilder = valueBuilder((String) builderObj);
         } else {
-			Yaml builderYaml = new Yaml((Map) builderObj);
+            Yaml builderYaml = new Yaml((Map) builderObj);
             valueBuilder = builderLoaderUtil.deriveLoader(builderYaml).load(builderYaml, allIds);
         }
 
-		ValueProcessor processor = YmlConfigUtil.loadOptionalValueProcessor(yaml, allIds);
-		String id = loadId(yaml, allIds);
-		log.debug("Loaded build parameter '" + id + '\'');
-		return new BuildParameter(id, YmlConfigUtil.loadPrototype(yaml), YmlConfigUtil.loadContext(yaml), valueBuilder, processor);
-	}
+        ValueProcessor processor = YmlConfigUtil.loadOptionalValueProcessor(yaml, allIds);
+        String id = loadId(yaml, allIds);
+        log.debug("Loaded build parameter '{}'", id);
+        return new BuildParameter(id, YmlConfigUtil.loadPrototype(yaml), YmlConfigUtil.loadContext(yaml), valueBuilder, processor);
+    }
 }

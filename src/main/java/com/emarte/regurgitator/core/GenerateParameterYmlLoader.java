@@ -11,23 +11,23 @@ import static com.emarte.regurgitator.core.YmlConfigUtil.*;
 
 public class GenerateParameterYmlLoader implements YmlLoader<Step> {
     private static final Log log = getLog(GenerateParameterYmlLoader.class);
-	private static final YmlLoaderUtil<YmlLoader<ValueGenerator>> generatorLoaderUtil = new YmlLoaderUtil<YmlLoader<ValueGenerator>>();
+    private static final YmlLoaderUtil<YmlLoader<ValueGenerator>> generatorLoaderUtil = new YmlLoaderUtil<YmlLoader<ValueGenerator>>();
 
-	@Override
-	public Step load(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
-		Object generatorObj = loadMandatory(yaml, GENERATOR);
-		ValueGenerator generator;
+    @Override
+    public Step load(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
+        Object generatorObj = loadMandatory(yaml, GENERATOR);
+        ValueGenerator generator;
 
-		if(generatorObj instanceof String) {
-			generator = valueGenerator(stringify(generatorObj));
-		} else {
-			Yaml generatorYaml = new Yaml((Map) generatorObj);
-			generator = generatorLoaderUtil.deriveLoader(generatorYaml).load(generatorYaml, allIds);
-		}
+        if(generatorObj instanceof String) {
+            generator = valueGenerator(stringify(generatorObj));
+        } else {
+            Yaml generatorYaml = new Yaml((Map) generatorObj);
+            generator = generatorLoaderUtil.deriveLoader(generatorYaml).load(generatorYaml, allIds);
+        }
 
-		ValueProcessor processor = loadOptionalValueProcessor(yaml, allIds);
-		String id = loadId(yaml, allIds);
-		log.debug("Loaded generate parameter '" + id + "'");
-		return new GenerateParameter(id, loadPrototype(yaml), loadContext(yaml), generator, processor);
-	}
+        ValueProcessor processor = loadOptionalValueProcessor(yaml, allIds);
+        String id = loadId(yaml, allIds);
+        log.debug("Loaded generate parameter '{}'", id);
+        return new GenerateParameter(id, loadPrototype(yaml), loadContext(yaml), generator, processor);
+    }
 }

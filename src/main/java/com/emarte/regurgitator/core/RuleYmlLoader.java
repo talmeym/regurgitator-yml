@@ -12,29 +12,28 @@ import static com.emarte.regurgitator.core.Log.getLog;
 import static com.emarte.regurgitator.core.YmlConfigConstants.CONDITIONS;
 import static com.emarte.regurgitator.core.YmlConfigUtil.*;
 
-public class RuleYmlLoader {
+class RuleYmlLoader {
     private static final Log log = getLog(RuleYmlLoader.class);
 
-	public static Rule load(Yaml yaml, Set<Object> stepIds, Set<Object> allIds) throws RegurgitatorException {
-		List<Condition> conditions = new ArrayList<Condition>();
+    static Rule load(Yaml yaml, Set<Object> stepIds, Set<Object> allIds) throws RegurgitatorException {
+        List<Condition> conditions = new ArrayList<Condition>();
+        List conditionYamls = (List) yaml.getValues().get(CONDITIONS);
 
-		List conditionYamls = (List) yaml.getValues().get(CONDITIONS);
+        if(conditionYamls != null) {
+            for (Object obj : conditionYamls) {
+                Yaml conditionYaml = new Yaml(CONDITION, (Map) obj);
+                conditions.add(ConditionYmlLoader.load(conditionYaml, allIds));
+            }
+        }
 
-		if(conditionYamls != null) {
-			for (Object obj : conditionYamls) {
-				Yaml conditionYaml = new Yaml(CONDITION, (Map) obj);
-				conditions.add(ConditionYmlLoader.load(conditionYaml, allIds));
-			}
-		}
+        String stepId = loadMandatoryStr(yaml, STEP);
 
-		String stepId = loadMandatoryStr(yaml, STEP);
+        if(!stepIds.contains(stepId)) {
+            throw new RegurgitatorException("Error with configuration: rule step not found: " + stepId);
+        }
 
-		if(!stepIds.contains(stepId)) {
-			throw new RegurgitatorException("Error with configuration: rule step not found: " + stepId);
-		}
-
-		String id = loadId(yaml, RULE, allIds);
-		log.debug("Loaded rule '" + id + "'");
-		return new Rule(id, conditions, stepId);
-	}
+        String id = loadId(yaml, RULE, allIds);
+        log.debug("Loaded rule '{}'", id);
+        return new Rule(id, conditions, stepId);
+    }
 }
