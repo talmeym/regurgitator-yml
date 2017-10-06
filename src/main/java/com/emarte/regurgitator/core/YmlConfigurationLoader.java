@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2017 Miles Talmey.
+ * Distributed under the MIT License (license terms are at http://opensource.org/licenses/MIT).
+ */
 package com.emarte.regurgitator.core;
 
 import com.esotericsoftware.yamlbeans.YamlReader;
@@ -7,8 +11,8 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Map;
 
-public class YmlConfigurationLoader implements ConfigurationLoader {
-    private static YmlLoaderUtil<YmlLoader<Step>> loaderUtil = new YmlLoaderUtil<YmlLoader<Step>>();
+class YmlConfigurationLoader implements ConfigurationLoader {
+    private static final YmlLoaderUtil<YmlLoader<Step>> loaderUtil = new YmlLoaderUtil<YmlLoader<Step>>();
 
     @Override
     public Step load(InputStream input) throws RegurgitatorException {
