@@ -80,7 +80,7 @@ decision:
  - step: special-response
    conditions:
    - source: parameters:special
-     equals: special
+     equals: true
 ```
 
 upon execution a decision evaluates all of its rules to see which pass. it then uses its ``rules behaviour`` to determines which of the passed rules should have their corresponding step executed. the default rules behaviour is ``FIRST_MATCH`` whereby the first rule that passes provides the step to be executed.
