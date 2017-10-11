@@ -20,6 +20,10 @@ sequence:
     source: response 
 ```
 
+### step ids
+
+all steps in a regurgitator configuration can be given an ``id`` property. ids can be used for identifying which step to run next (see [decision](https://github.com/talmeym/regurgitator-core-yml#decision), below) and therefore must be unique. if no id property is given for a step, a system-generated one will be assigned to it at load time, combining the type of the step with a 4 digit randon number, eg: ``create-parameter-6557``
+
 ## core steps in yml
 
 ### sequence
@@ -76,7 +80,7 @@ decision:
  - step: special-response
    conditions:
    - source: parameters:special
-     equals: special
+     equals: true
 ```
 
 upon execution a decision evaluates all of its rules to see which pass. it then uses its ``rules behaviour`` to determines which of the passed rules should have their corresponding step executed. the default rules behaviour is ``FIRST_MATCH`` whereby the first rule that passes provides the step to be executed.
