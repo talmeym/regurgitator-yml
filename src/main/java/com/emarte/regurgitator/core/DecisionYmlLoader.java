@@ -9,6 +9,7 @@ import java.util.*;
 import static com.emarte.regurgitator.core.CoreConfigConstants.*;
 import static com.emarte.regurgitator.core.EntityLookup.rulesBehaviour;
 import static com.emarte.regurgitator.core.Log.getLog;
+import static com.emarte.regurgitator.core.RuleYmlLoader.loadRule;
 import static com.emarte.regurgitator.core.StringType.stringify;
 import static com.emarte.regurgitator.core.YmlConfigUtil.*;
 
@@ -56,7 +57,7 @@ public class DecisionYmlLoader implements YmlLoader<Step> {
         if(ruleYamls != null) {
             for (Object obj : ruleYamls) {
                 Yaml ruleYaml = new Yaml(RULE, (Map) obj);
-                rules.add(RuleYmlLoader.load(ruleYaml, stepIds, allIds));
+                rules.add(loadRule(ruleYaml, stepIds, allIds));
             }
         }
 
