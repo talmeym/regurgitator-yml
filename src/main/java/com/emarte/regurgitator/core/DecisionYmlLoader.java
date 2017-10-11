@@ -51,7 +51,7 @@ public class DecisionYmlLoader implements YmlLoader<Step> {
     private List<Rule> loadRules(Yaml yaml, Set<Object> stepIds, Set<Object> allIds) throws RegurgitatorException {
         List<Rule> rules = new ArrayList<Rule>();
 
-        List ruleYamls = (List) yaml.getValues().get(RULES);
+        List ruleYamls = (List) yaml.get(RULES);
 
         if(ruleYamls != null) {
             for (Object obj : ruleYamls) {
@@ -65,7 +65,7 @@ public class DecisionYmlLoader implements YmlLoader<Step> {
 
     private List<Step> loadSteps(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
         List<Step> steps = new ArrayList<Step>();
-        List stepYamls = (List) yaml.getValues().get(STEPS);
+        List stepYamls = (List) yaml.get(STEPS);
 
         if(stepYamls != null) {
             for (Object obj : stepYamls) {

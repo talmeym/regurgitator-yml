@@ -16,8 +16,7 @@ public class YmlConfigUtil {
     private static final Random RANDOM = new Random();
 
     public static String loadId(Yaml yaml, Set<Object> ids) throws RegurgitatorException {
-        Map values = yaml.getValues();
-        String id = values.containsKey(ID) ? (String) values.get(ID) : yaml.getType() + "-" + new Random().nextInt(100000);
+        String id = yaml.contains(ID) ? (String) yaml.get(ID) : yaml.getType() + "-" + new Random().nextInt(100000);
 
         if (!ids.add(id)) {
             throw new RegurgitatorException("Duplicate id: " + id);
@@ -27,8 +26,7 @@ public class YmlConfigUtil {
     }
 
     public static String loadId(Yaml inner, String outerName, Set<Object> ids) throws RegurgitatorException {
-        Map values = inner.getValues();
-        String id = values.containsKey(ID) ? (String) values.get(ID) : outerName + "-" + RANDOM.nextInt(100000);
+        String id = inner.contains(ID) ? (String) inner.get(ID) : outerName + "-" + RANDOM.nextInt(100000);
 
         if (!ids.add(id)) {
             throw new RegurgitatorException("Duplicate id: " + id);
@@ -38,31 +36,26 @@ public class YmlConfigUtil {
     }
 
     public static Object loadOptional(Yaml yaml, String key) {
-        return yaml.getValues().containsKey(key) ? yaml.getValues().get(key) : null;
+        return yaml.contains(key) ? yaml.get(key) : null;
     }
 
     public static String loadOptionalStr(Yaml yaml, String name) {
-        Map values = yaml.getValues();
-        return values.containsKey(name) ? (String) values.get(name) : null;
+        return yaml.contains(name) ? (String) yaml.get(name) : null;
     }
 
     public static boolean loadOptionalBoolean(Yaml yaml, String key) {
-        Map values = yaml.getValues();
-        return values.containsKey(key) && ((String)values.get(key)).toLowerCase().equals("true");
+        return yaml.contains(key) && ((String)yaml.get(key)).toLowerCase().equals("true");
     }
 
     public static Object loadMandatory(Yaml yaml, String key) throws RegurgitatorException {
-        Map values = yaml.getValues();
-
-        if (values.containsKey(key)) {
-            return values.get(key);
+        if (yaml.contains(key)) {
+            return yaml.get(key);
         }
 
         throw new RegurgitatorException("Yml missing mandatory element: " + key);    }
 
     public static ValueProcessor loadOptionalValueProcessor(Yaml yaml, Set<Object> ids) throws RegurgitatorException {
-        Map values = yaml.getValues();
-        Object processorObj = values.get(PROCESSOR);
+        Object processorObj = yaml.get(PROCESSOR);
 
         if(processorObj instanceof String) {
             return valueProcessor((String) processorObj);
@@ -83,31 +76,26 @@ public class YmlConfigUtil {
     }
 
     public static String loadMandatoryStr(Yaml yaml, String key) throws RegurgitatorException {
-        Map values = yaml.getValues();
-
-        if(values.containsKey(key)) {
-            return (String) values.get(key);
+        if(yaml.contains(key)) {
+            return (String) yaml.get(key);
         }
 
         throw new RegurgitatorException("Yml missing mandatory element: " + key);
     }
 
     private static ParameterType loadType(Yaml yaml) throws RegurgitatorException {
-        Map values = yaml.getValues();
-        return values.containsKey(TYPE) ? parameterType((String) values.get(TYPE)) : STRING;
+        return yaml.contains(TYPE) ? parameterType((String) yaml.get(TYPE)) : STRING;
     }
 
     private static ConflictPolicy loadConflictPolicy(Yaml yaml) {
-        Map values = yaml.getValues();
-        return values.containsKey(MERGE) ? ConflictPolicy.valueOf((String)values.get(MERGE)) : REPLACE;
+        return yaml.contains(MERGE) ? ConflictPolicy.valueOf((String)yaml.get(MERGE)) : REPLACE;
     }
 
     public static String loadContext(Yaml yaml) {
-        return new ContextLocation((String) yaml.getValues().get(NAME)).getContext();
+        return new ContextLocation((String) yaml.get(NAME)).getContext();
     }
 
     public static Integer loadOptionalInt(Yaml yaml, String name) {
-        Map values = yaml.getValues();
-        return values.containsKey(name) ? Integer.parseInt((String) values.get(name)) : null;
+        return yaml.contains(name) ? Integer.parseInt((String) yaml.get(name)) : null;
     }
 }

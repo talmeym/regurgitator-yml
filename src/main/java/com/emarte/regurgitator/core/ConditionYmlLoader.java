@@ -49,8 +49,8 @@ class ConditionYmlLoader {
 
     @SuppressWarnings("unchecked")
     private static Entry getBehaviourAttribute(Yaml yaml) throws RegurgitatorException {
-        boolean behaviourFieldFound = yaml.getValues().containsKey(BEHAVIOUR);
-        Set<Entry> entries = yaml.getValues().entrySet();
+        boolean behaviourFieldFound = yaml.contains(BEHAVIOUR);
+        Set<Entry> entries = yaml.getValueMap().entrySet();
         Set<Entry> behavioursFound = new HashSet<Entry>();
 
         for(Entry entry: entries) {
