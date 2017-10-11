@@ -4,17 +4,13 @@
  */
 package com.emarte.regurgitator.core;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import static com.emarte.regurgitator.core.CoreConfigConstants.CONDITION;
-import static com.emarte.regurgitator.core.CoreConfigConstants.RULE;
-import static com.emarte.regurgitator.core.CoreConfigConstants.STEP;
+import static com.emarte.regurgitator.core.CoreConfigConstants.*;
 import static com.emarte.regurgitator.core.Log.getLog;
 import static com.emarte.regurgitator.core.YmlConfigConstants.CONDITIONS;
-import static com.emarte.regurgitator.core.YmlConfigUtil.*;
+import static com.emarte.regurgitator.core.YmlConfigUtil.loadId;
+import static com.emarte.regurgitator.core.YmlConfigUtil.loadMandatoryStr;
 
 class RuleYmlLoader {
     private static final Log log = getLog(RuleYmlLoader.class);

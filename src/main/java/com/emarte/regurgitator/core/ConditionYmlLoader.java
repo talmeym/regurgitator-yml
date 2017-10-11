@@ -4,9 +4,7 @@
  */
 package com.emarte.regurgitator.core;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.emarte.regurgitator.core.CoreConfigConstants.*;
 import static com.emarte.regurgitator.core.EntityLookup.conditionBehaviour;

@@ -4,7 +4,8 @@
  */
 package com.emarte.regurgitator.core;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.util.Collections.unmodifiableMap;
 

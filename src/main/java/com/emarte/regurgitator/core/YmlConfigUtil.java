@@ -9,7 +9,8 @@ import java.util.*;
 import static com.emarte.regurgitator.core.ConflictPolicy.REPLACE;
 import static com.emarte.regurgitator.core.CoreConfigConstants.*;
 import static com.emarte.regurgitator.core.CoreTypes.STRING;
-import static com.emarte.regurgitator.core.EntityLookup.*;
+import static com.emarte.regurgitator.core.EntityLookup.parameterType;
+import static com.emarte.regurgitator.core.EntityLookup.valueProcessor;
 
 public class YmlConfigUtil {
     private static final YmlLoaderUtil<YmlLoader<ValueProcessor>> processorLoaderUtil = new YmlLoaderUtil<YmlLoader<ValueProcessor>>();

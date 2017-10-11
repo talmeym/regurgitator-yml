@@ -11,7 +11,8 @@ import static com.emarte.regurgitator.core.EntityLookup.rulesBehaviour;
 import static com.emarte.regurgitator.core.Log.getLog;
 import static com.emarte.regurgitator.core.RuleYmlLoader.loadRule;
 import static com.emarte.regurgitator.core.StringType.stringify;
-import static com.emarte.regurgitator.core.YmlConfigUtil.*;
+import static com.emarte.regurgitator.core.YmlConfigUtil.loadId;
+import static com.emarte.regurgitator.core.YmlConfigUtil.loadOptionalStr;
 
 public class DecisionYmlLoader implements YmlLoader<Step> {
     private static final Log log = getLog(DecisionYmlLoader.class);

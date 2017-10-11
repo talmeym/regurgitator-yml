@@ -7,8 +7,8 @@ package com.emarte.regurgitator.core;
 import java.util.Set;
 
 import static com.emarte.regurgitator.core.CoreConfigConstants.*;
-import static com.emarte.regurgitator.core.YmlConfigUtil.*;
 import static com.emarte.regurgitator.core.Log.getLog;
+import static com.emarte.regurgitator.core.YmlConfigUtil.*;
 
 public class CreateParameterYmlLoader extends CreateParameterLoader implements YmlLoader<Step> {
     private static final Log log = getLog(CreateParameterYmlLoader.class);
