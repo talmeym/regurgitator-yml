@@ -44,7 +44,7 @@ public class YmlConfigUtil {
         return yaml.contains(name) ? (String) yaml.get(name) : null;
     }
 
-    public static boolean loadOptionalBoolean(Yaml yaml, String key) {
+    public static boolean loadOptionalBool(Yaml yaml, String key) {
         return yaml.contains(key) && ((String)yaml.get(key)).toLowerCase().equals("true");
     }
 
@@ -98,5 +98,9 @@ public class YmlConfigUtil {
 
     public static Integer loadOptionalInt(Yaml yaml, String name) {
         return yaml.contains(name) ? Integer.parseInt((String) yaml.get(name)) : null;
+    }
+
+    public static Long loadOptionalLong(Yaml yaml, String name) {
+        return yaml.contains(name) ? Long.parseLong((String) yaml.get(name)) : null;
     }
 }
