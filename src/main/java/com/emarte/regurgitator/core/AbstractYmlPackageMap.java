@@ -4,7 +4,9 @@
  */
 package com.emarte.regurgitator.core;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AbstractYmlPackageMap implements YmlPackageMap {
     private final Map<List<String>, String> PACKAGE_TYPES = new HashMap<List<String>, String>();

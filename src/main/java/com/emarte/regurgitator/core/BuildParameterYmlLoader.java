@@ -4,6 +4,7 @@
  */
 package com.emarte.regurgitator.core;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import static com.emarte.regurgitator.core.CoreConfigConstants.BUILDER;
 import static com.emarte.regurgitator.core.EntityLookup.valueBuilder;
 import static com.emarte.regurgitator.core.Log.getLog;
 import static com.emarte.regurgitator.core.YmlConfigUtil.loadId;
+import static com.emarte.regurgitator.core.YmlConfigUtil.loadOptionalValueProcessors;
 
 public class BuildParameterYmlLoader implements YmlLoader<Step> {
     private static final Log log = getLog(BuildParameterYmlLoader.class);
@@ -28,9 +30,10 @@ public class BuildParameterYmlLoader implements YmlLoader<Step> {
             valueBuilder = builderLoaderUtil.deriveLoader(builderYaml).load(builderYaml, allIds);
         }
 
-        ValueProcessor processor = YmlConfigUtil.loadOptionalValueProcessor(yaml, allIds);
+        List<ValueProcessor> processors = loadOptionalValueProcessors(yaml, allIds);
+
         String id = loadId(yaml, allIds);
         log.debug("Loaded build parameter '{}'", id);
-        return new BuildParameter(id, YmlConfigUtil.loadPrototype(yaml), YmlConfigUtil.loadContext(yaml), valueBuilder, processor);
+        return new BuildParameter(id, YmlConfigUtil.loadPrototype(yaml), YmlConfigUtil.loadContext(yaml), valueBuilder, processors);
     }
 }

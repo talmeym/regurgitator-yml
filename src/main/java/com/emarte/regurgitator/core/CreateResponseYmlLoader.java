@@ -4,6 +4,7 @@
  */
 package com.emarte.regurgitator.core;
 
+import java.util.List;
 import java.util.Set;
 
 import static com.emarte.regurgitator.core.CoreConfigConstants.*;
@@ -18,7 +19,7 @@ public class CreateResponseYmlLoader extends CreateResponseLoader implements Yml
         String source = loadOptionalStr(yaml, SOURCE);
         String value = loadOptionalStr(yaml, VALUE);
         String file = loadOptionalStr(yaml, FILE);
-        ValueProcessor processor = loadOptionalValueProcessor(yaml, allIds);
-        return buildCreateResponse(loadId(yaml, allIds), source, value, file, processor, log);
+        List<ValueProcessor> processors = loadOptionalValueProcessors(yaml, allIds);
+        return buildCreateResponse(loadId(yaml, allIds), source, value, file, processors, log);
     }
 }

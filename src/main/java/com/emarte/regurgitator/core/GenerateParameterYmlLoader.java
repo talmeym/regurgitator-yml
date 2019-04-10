@@ -4,6 +4,7 @@
  */
 package com.emarte.regurgitator.core;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,9 +30,10 @@ public class GenerateParameterYmlLoader implements YmlLoader<Step> {
             generator = generatorLoaderUtil.deriveLoader(generatorYaml).load(generatorYaml, allIds);
         }
 
-        ValueProcessor processor = loadOptionalValueProcessor(yaml, allIds);
+        List<ValueProcessor> processors = loadOptionalValueProcessors(yaml, allIds);
+
         String id = loadId(yaml, allIds);
         log.debug("Loaded generate parameter '{}'", id);
-        return new GenerateParameter(id, loadPrototype(yaml), loadContext(yaml), generator, processor);
+        return new GenerateParameter(id, loadPrototype(yaml), loadContext(yaml), generator, processors);
     }
 }

@@ -16,20 +16,20 @@ public class YmlConfigUtil {
     private static final YmlLoaderUtil<YmlLoader<ValueProcessor>> processorLoaderUtil = new YmlLoaderUtil<YmlLoader<ValueProcessor>>();
     private static final Random RANDOM = new Random();
 
-    public static String loadId(Yaml yaml, Set<Object> ids) throws RegurgitatorException {
+    public static String loadId(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
         String id = yaml.contains(ID) ? (String) yaml.get(ID) : yaml.getType() + "-" + new Random().nextInt(100000);
 
-        if (!ids.add(id)) {
+        if (!allIds.add(id)) {
             throw new RegurgitatorException("Duplicate id: " + id);
         }
 
         return id;
     }
 
-    public static String loadId(Yaml inner, String outerName, Set<Object> ids) throws RegurgitatorException {
+    public static String loadId(Yaml inner, String outerName, Set<Object> allIds) throws RegurgitatorException {
         String id = inner.contains(ID) ? (String) inner.get(ID) : outerName + "-" + RANDOM.nextInt(100000);
 
-        if (!ids.add(id)) {
+        if (!allIds.add(id)) {
             throw new RegurgitatorException("Duplicate id: " + id);
         }
 
@@ -55,17 +55,23 @@ public class YmlConfigUtil {
 
         throw new RegurgitatorException("Yml missing mandatory element: " + key);    }
 
-    public static ValueProcessor loadOptionalValueProcessor(Yaml yaml, Set<Object> ids) throws RegurgitatorException {
+    public static List<ValueProcessor> loadOptionalValueProcessors(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
+        List<ValueProcessor> processors = new ArrayList<ValueProcessor>();
         Object processorObj = yaml.get(PROCESSOR);
 
-        if(processorObj instanceof String) {
-            return valueProcessor((String) processorObj);
-        } else if (processorObj != null){
+        if(processorObj instanceof List) {
+            for (Object obj : (List)processorObj) {
+                Yaml stepYaml = new Yaml((Map) obj);
+                processors.add(processorLoaderUtil.deriveLoader(stepYaml).load(stepYaml, allIds));
+            }
+        } else if(processorObj instanceof String) {
+            processors.add(valueProcessor((String) processorObj));
+        } else if (processorObj != null) {
             Yaml processorYaml = new Yaml((Map) processorObj);
-            return processorLoaderUtil.deriveLoader(processorYaml).load(processorYaml, ids);
+            processors.add(processorLoaderUtil.deriveLoader(processorYaml).load(processorYaml, allIds));
         }
 
-        return null;
+        return processors;
     }
 
     public static ParameterPrototype loadPrototype(Yaml yaml) throws RegurgitatorException {
@@ -92,8 +98,8 @@ public class YmlConfigUtil {
         return yaml.contains(MERGE) ? ConflictPolicy.valueOf((String)yaml.get(MERGE)) : REPLACE;
     }
 
-    public static String loadContext(Yaml yaml) {
-        return new ContextLocation((String) yaml.get(NAME)).getContext();
+    public static String loadContext(Yaml yaml) throws RegurgitatorException {
+        return new ContextLocation(loadMandatoryStr(yaml, NAME)).getContext();
     }
 
     public static Integer loadOptionalInt(Yaml yaml, String name) {

@@ -4,6 +4,7 @@
  */
 package com.emarte.regurgitator.core;
 
+import java.util.List;
 import java.util.Set;
 
 import static com.emarte.regurgitator.core.CoreConfigConstants.*;
@@ -18,7 +19,7 @@ public class CreateParameterYmlLoader extends CreateParameterLoader implements Y
         String source = loadOptionalStr(yaml, SOURCE);
         String value = loadOptionalStr(yaml, VALUE);
         String file = loadOptionalStr(yaml, FILE);
-        ValueProcessor processor = loadOptionalValueProcessor(yaml, allIds);
-        return buildCreateParameter(loadId(yaml, allIds), loadPrototype(yaml), loadContext(yaml), source, value, file, processor, log);
+        List<ValueProcessor> processors = loadOptionalValueProcessors(yaml, allIds);
+        return buildCreateParameter(loadId(yaml, allIds), loadPrototype(yaml), loadContext(yaml), source, value, file, processors, log);
     }
 }
