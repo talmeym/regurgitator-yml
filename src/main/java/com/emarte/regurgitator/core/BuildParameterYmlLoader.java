@@ -21,19 +21,19 @@ public class BuildParameterYmlLoader implements YmlLoader<Step> {
     @Override
     public Step load(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
         Object builderObj = YmlConfigUtil.loadMandatory(yaml, BUILDER);
-        ValueBuilder valueBuilder;
+        ValueBuilder builder;
 
         if(builderObj instanceof String) {
-            valueBuilder = valueBuilder((String) builderObj);
+            builder = valueBuilder((String) builderObj);
         } else {
             Yaml builderYaml = new Yaml((Map) builderObj);
-            valueBuilder = builderLoaderUtil.deriveLoader(builderYaml).load(builderYaml, allIds);
+            builder = builderLoaderUtil.deriveLoader(builderYaml).load(builderYaml, allIds);
         }
 
         List<ValueProcessor> processors = loadOptionalValueProcessors(yaml, allIds);
 
         String id = loadId(yaml, allIds);
         log.debug("Loaded build parameter '{}'", id);
-        return new BuildParameter(id, YmlConfigUtil.loadPrototype(yaml), YmlConfigUtil.loadContext(yaml), valueBuilder, processors);
+        return new BuildParameter(id, YmlConfigUtil.loadPrototype(yaml), YmlConfigUtil.loadContext(yaml), builder, processors);
     }
 }
