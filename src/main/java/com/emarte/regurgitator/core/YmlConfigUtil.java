@@ -58,17 +58,36 @@ public class YmlConfigUtil {
     public static List<ValueProcessor> loadOptionalValueProcessors(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
         List<ValueProcessor> processors = new ArrayList<ValueProcessor>();
         Object processorObj = yaml.get(PROCESSOR);
+        Object processorsObj = yaml.get(PROCESSORS);
 
-        if(processorObj instanceof List) {
-            for (Object obj : (List)processorObj) {
-                Yaml stepYaml = new Yaml((Map) obj);
-                processors.add(processorLoaderUtil.deriveLoader(stepYaml).load(stepYaml, allIds));
+        if(processorObj != null && processorsObj != null) {
+            throw new RegurgitatorException("Only one of 'processor' or 'processors' is allowed");
+        }
+
+        if(processorObj != null) {
+            if(processorObj instanceof String) {
+                processors.add(valueProcessor((String) processorObj));
+            } else if(processorObj instanceof Map) {
+                Yaml processor = new Yaml((Map) processorObj);
+                processors.add(processorLoaderUtil.deriveLoader(processor).load(processor, allIds));
+            } else {
+                throw new RegurgitatorException("'processor' should be a string or an object or, for an array, replaced with 'processors'");
             }
-        } else if(processorObj instanceof String) {
-            processors.add(valueProcessor((String) processorObj));
-        } else if (processorObj != null) {
-            Yaml processorYaml = new Yaml((Map) processorObj);
-            processors.add(processorLoaderUtil.deriveLoader(processorYaml).load(processorYaml, allIds));
+        }
+
+        if(processorsObj != null) {
+            if(processorsObj instanceof String) {
+                for(String part: ((String)processorsObj).split(",")) {
+                    processors.add(valueProcessor(part));
+                }
+            } else if (processorsObj instanceof List) {
+                for (Object object : (List) processorsObj) {
+                    Yaml processor = new Yaml((Map) object);
+                    processors.add(processorLoaderUtil.deriveLoader(processor).load(processor, allIds));
+                }
+            } else {
+                throw new RegurgitatorException("'processors' field should be an array, or replaced with 'processor'");
+            }
         }
 
         return processors;
