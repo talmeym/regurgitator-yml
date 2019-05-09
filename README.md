@@ -286,6 +286,52 @@ create-parameter:
  source: session:stored-value
 ```
 
+### record-message
+
+a record-message step allows you to output the contents of a ``message`` to either a file or to standard out.
+
+```yml
+record-message:
+ folder: /users/miles/regurgitator/messages
+```
+
+the output is a json document representing the message state, showing each ``context`` and their ``parameter`` values grouped, eg.
+
+```json
+{
+    "request-headers": {
+        "accept": "*/*",
+        "accept-encoding": "gzip",
+        "connection": "Keep-Alive",
+        "content-type": "application/json",
+        "cookie": "JSESSIONID=E830BD8B9217BA34441A0DDABBAB7F9E",
+        "host": "localhost:9090",
+        "user-agent": "Mozilla/5.0"
+    },
+    "request-metadata": {
+        "content-length": "-1",
+        "content-type": "application/json",
+        "http-session-id": "E830BD8B9217BA34441A0DDABBAB7F9E",
+        "local-address": "127.0.0.1",
+        "local-name": "localhost",
+        "local-port": "9090",
+        "method": "GET",
+        "path-info": "/app/resource/123",
+        "protocol": "HTTP/1.1",
+        "query-string": "country=GB&currency=GBP",
+        "remote-address": "127.0.0.1",
+        "remote-host": "127.0.0.1",
+        "request-uri": "/app/resource/123",
+        "requested-session-id": "E830BD8B9217BA34441A0DDABBAB7F9E",
+        "scheme": "http",
+        "server-name": "localhost",
+        "server-port": "9090"
+    }
+}
+```
+
+if a folder is ommitted, the message state is output to standard out. 
+
 ## core constructs in yml
 
 ### number-generator
