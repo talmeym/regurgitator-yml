@@ -53,7 +53,18 @@ public class YmlConfigUtil {
             return yaml.get(key);
         }
 
-        throw new RegurgitatorException("Yml missing mandatory element: " + key);    }
+        throw new RegurgitatorException("Yml missing mandatory element: " + key);
+    }
+
+    public static List<ValueProcessor> loadMandatoryValueProcessors(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
+        List<ValueProcessor> processors = loadOptionalValueProcessors(yaml, allIds);
+
+        if(processors != null && processors.size() > 0) {
+            return processors;
+        }
+
+        throw new RegurgitatorException("element missing mandatory processor or processors");
+    }
 
     public static List<ValueProcessor> loadOptionalValueProcessors(Yaml yaml, Set<Object> allIds) throws RegurgitatorException {
         List<ValueProcessor> processors = new ArrayList<ValueProcessor>();
